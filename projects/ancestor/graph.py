@@ -15,7 +15,8 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = set()
+        if vertex_id not in self.vertices:
+            self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
@@ -144,7 +145,7 @@ class Graph:
                         # APPEND THE NEIGHOR TO THE BACK
                         q.enqueue(new_path)
 
-    def dfs(self, starting_vertex, destination_vertex):
+    def dfs(self, starting_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -153,23 +154,17 @@ class Graph:
         s = Stack()
         s.push([starting_vertex])
 
-        visited = set()
+        all_list = []
 
-        while s.size() >= 0:
+        while s.size() > 0:
             path = s.pop()
-            print(path)
-
             v = path[-1]
-            if v not in visited:
-                visited.add(v)
-
-                if v == destination_vertex:
-                    return path
-                else:
-                    for next_vert in self.get_neighbors(v):
-                        new_path = list(path)
-                        new_path.append(next_vert)
-                        s.push(new_path)
+            for next_vert in self.get_neighbors(v):
+                new_path = list(path)
+                new_path.append(next_vert)
+                s.push(new_path)
+                all_list.append(new_path)
+        return all_list
 
     def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
         """
