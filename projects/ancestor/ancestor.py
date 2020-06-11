@@ -5,21 +5,18 @@ from util import Stack, Queue
 
 def earliest_ancestor(ancestors, starting_node):
     # instantiate graph
-    # put parents and children in set
     graph = Graph()
     final_list = []
 
     # loop through ancestors list and input tuples into graph vertices
-    ancestors = [x[::-1] for x in ancestors]
+    # ancestors = [x[::-1] for x in ancestors]
     for parent, child in ancestors:
         if parent not in graph.vertices:
             graph.add_vertex(parent)
         if child not in graph.vertices:
             graph.add_vertex(child)
 
-        graph.add_edge(parent, child)
-
-    # print(graph.vertices)
+        graph.add_edge(child, parent)
 
     # loop through vertices and get it's neightbors
     all_lists = graph.dfs(starting_node)
